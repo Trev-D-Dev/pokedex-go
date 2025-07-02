@@ -19,7 +19,15 @@ func main() {
 
 			word1 := cInput[0]
 
-			fmt.Printf("Your command was: %v\n", word1)
+			if val, ok := commands[word1]; ok {
+				err := val.callback()
+
+				if err != nil {
+					fmt.Printf("error: %v", err)
+				}
+			} else {
+				fmt.Println("Unknown command")
+			}
 		}
 	}
 }
