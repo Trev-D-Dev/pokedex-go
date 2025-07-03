@@ -30,7 +30,12 @@ func startRepl(cfg *config) {
 			comm, ok := getCommands()[commName]
 
 			if ok {
-				err := comm.callback(cfg)
+				var err error
+				if commName == "explore" {
+					err = comm.callback(cfg, cInput[1])
+				} else {
+					err = comm.callback(cfg, "")
+				}
 
 				if err != nil {
 					fmt.Printf("error: %v", err)
@@ -53,7 +58,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config) error
+	callback    func(*config, string) error
 }
 
 func getCommands() map[string]cliCommand {
