@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestCleanInput(t *testing.T) {
 	cases := []struct {
@@ -8,34 +10,34 @@ func TestCleanInput(t *testing.T) {
 		expected []string
 	}{
 		{
+			input:    " ",
+			expected: []string{},
+		},
+		{
+			input:    "  hello  ",
+			expected: []string{"hello"},
+		},
+		{
 			input:    "  hello  world  ",
 			expected: []string{"hello", "world"},
 		},
 		{
-			input:    "Charmander Bulbasaur PIKACHU",
-			expected: []string{"charmander", "bulbasaur", "pikachu"},
+			input:    "  HellO  World  ",
+			expected: []string{"hello", "world"},
 		},
 	}
 
 	for _, c := range cases {
 		actual := cleanInput(c.input)
-		// Check the length of the actual slice against the expected slice
-		// if they don't match, use t.Errorf to print an error message
-		// and fail the test
-
 		if len(actual) != len(c.expected) {
-			t.Errorf("expected length: %v, actual length: %v", len(c.expected), len(actual))
+			t.Errorf("expected length: %v  actual length: %v", len(c.expected), len(actual))
+			continue
 		}
-
 		for i := range actual {
 			word := actual[i]
-			expectedWord := c.expected[i]
-			// Check each word in the slice
-			// if they don't match, use t.Errorf to print an error message
-			// and fail the test
-
-			if word != expectedWord {
-				t.Errorf("got: %v, expected: %v", word, expectedWord)
+			expWord := c.expected[i]
+			if word != expWord {
+				t.Errorf("expected word: %v  actual word: %v", expWord, word)
 			}
 		}
 	}
