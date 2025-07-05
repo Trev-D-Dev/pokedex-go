@@ -31,7 +31,7 @@ func startRepl(cfg *config) {
 
 			if ok {
 				var err error
-				if commName == "explore" {
+				if commName == "explore" || commName == "catch" {
 					err = comm.callback(cfg, cInput[1])
 				} else {
 					err = comm.callback(cfg, "")
@@ -87,6 +87,11 @@ func getCommands() map[string]cliCommand {
 			name:        "explore",
 			description: "Displays the pokemon that can be found at a specific world area location",
 			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch",
+			description: "Attempts to catch the entered pokemon. Adds them to Pokedex if successful",
+			callback:    commandCatch,
 		},
 	}
 }
