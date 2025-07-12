@@ -7,13 +7,12 @@ import (
 )
 
 type Pokemon struct {
-	name      string
-	baseEXP   int
-	abilities []string
-	forms     []string
-	moves     []string
-	stats     map[string]int
-	types     []string
+	name    string
+	baseEXP int
+	height  int
+	weight  int
+	stats   map[string]int
+	types   []string
 }
 
 type Pokedex struct {
@@ -23,26 +22,6 @@ type Pokedex struct {
 
 func (p *Pokedex) Add(pokemon types.RespPokemonInfo) {
 	key := pokemon.Name
-
-	lenAbs := len(pokemon.Abilities)
-	abilities := make([]string, lenAbs)
-	for i, ability := range pokemon.Abilities {
-		abilities[i] = ability.Ability.Name
-	}
-
-	lenForms := len(pokemon.Forms)
-	forms := make([]string, lenForms)
-	for i, form := range pokemon.Forms {
-		forms[i] = form.Name
-	}
-
-	moves := make([]string, 5)
-	for i, move := range pokemon.Moves {
-		if i > 4 {
-			break
-		}
-		moves[i] = move.Move.Name
-	}
 
 	stats := make(map[string]int)
 	for _, stat := range pokemon.Stats {
@@ -59,13 +38,12 @@ func (p *Pokedex) Add(pokemon types.RespPokemonInfo) {
 	}
 
 	newPokemon := Pokemon{
-		name:      key,
-		baseEXP:   pokemon.BaseExp,
-		abilities: abilities,
-		forms:     forms,
-		moves:     moves,
-		stats:     stats,
-		types:     types,
+		name:    key,
+		baseEXP: pokemon.BaseExp,
+		height:  pokemon.Height,
+		weight:  pokemon.Weight,
+		stats:   stats,
+		types:   types,
 	}
 
 	p.mu.Lock()
