@@ -31,11 +31,13 @@ func startRepl(cfg *config) {
 
 			if ok {
 				var err error
-				if commName == "explore" || commName == "catch" {
+				/*if commName == "explore" || commName == "catch" || commName == "inspect" {
 					err = comm.callback(cfg, cInput[1])
 				} else {
 					err = comm.callback(cfg, "")
-				}
+				}*/
+
+				err = comm.callback(cfg, cInput[1])
 
 				if err != nil {
 					fmt.Printf("error: %v", err)
@@ -92,6 +94,11 @@ func getCommands() map[string]cliCommand {
 			name:        "catch",
 			description: "Attempts to catch the entered pokemon. Adds them to Pokedex if successful",
 			callback:    commandCatch,
+		},
+		"inspect": {
+			name:        "inspect",
+			description: "Lists attributes of a caught pokemon",
+			callback:    commandInspect,
 		},
 	}
 }

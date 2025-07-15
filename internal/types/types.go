@@ -36,3 +36,12 @@ type RespPokemonInfo struct {
 		} `json:"type"`
 	} `json:"types"`
 }
+
+type Pokemon struct {
+	Name    string
+	BaseEXP int
+	Height  int
+	Weight  int
+	Stats   map[string]int
+	Types   []string
+}

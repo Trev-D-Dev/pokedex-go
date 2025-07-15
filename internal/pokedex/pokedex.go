@@ -6,18 +6,9 @@ import (
 	"github.com/Trev-D-Dev/pokedex-go/internal/types"
 )
 
-type Pokemon struct {
-	name    string
-	baseEXP int
-	height  int
-	weight  int
-	stats   map[string]int
-	types   []string
-}
-
 type Pokedex struct {
 	mu      sync.Mutex
-	pokemon map[string]Pokemon
+	pokemon map[string]types.Pokemon
 }
 
 func (p *Pokedex) Add(pokemon types.RespPokemonInfo) {
@@ -31,19 +22,19 @@ func (p *Pokedex) Add(pokemon types.RespPokemonInfo) {
 	}
 
 	lenTypes := len(pokemon.Types)
-	types := make([]string, lenTypes)
+	pokeTypes := make([]string, lenTypes)
 	for i, pType := range pokemon.Types {
 		tName := pType.Type.Name
-		types[i] = tName
+		pokeTypes[i] = tName
 	}
 
-	newPokemon := Pokemon{
-		name:    key,
-		baseEXP: pokemon.BaseExp,
-		height:  pokemon.Height,
-		weight:  pokemon.Weight,
-		stats:   stats,
-		types:   types,
+	newPokemon := types.Pokemon{
+		Name:    key,
+		BaseEXP: pokemon.BaseExp,
+		Height:  pokemon.Height,
+		Weight:  pokemon.Weight,
+		Stats:   stats,
+		Types:   pokeTypes,
 	}
 
 	p.mu.Lock()
@@ -54,21 +45,21 @@ func (p *Pokedex) Add(pokemon types.RespPokemonInfo) {
 
 func NewPokedex() *Pokedex {
 	newPokedex := Pokedex{}
-	newPokedex.pokemon = make(map[string]Pokemon)
+	newPokedex.pokemon = make(map[string]types.Pokemon)
 
 	return &newPokedex
 }
 
-func (p *Pokedex) Get(key string) (Pokemon, bool) {
+func (p *Pokedex) Get(key string) (types.Pokemon, bool) {
 	entry, ok := p.pokemon[key]
 	if !ok {
-		empty := Pokemon{}
+		empty := types.Pokemon{}
 		return empty, false
 	} else {
 		return entry, true
 	}
 }
 
-func (p *Pokedex) ReturnEntries() map[string]Pokemon {
+func (p *Pokedex) ReturnEntries() map[string]types.Pokemon {
 	return p.pokemon
 }
