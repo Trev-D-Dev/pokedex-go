@@ -30,13 +30,13 @@ func startRepl(cfg *config) {
 			comm, ok := getCommands()[commName]
 
 			if ok {
-				/*if commName == "explore" || commName == "catch" || commName == "inspect" {
-					err = comm.callback(cfg, cInput[1])
-				} else {
-					err = comm.callback(cfg, "")
-				}*/
+				passedString := ""
 
-				err := comm.callback(cfg, cInput[1])
+				if len(cInput) > 1 {
+					passedString = cInput[1]
+				}
+
+				err := comm.callback(cfg, passedString)
 
 				if err != nil {
 					fmt.Printf("error: %v", err)
