@@ -25,15 +25,25 @@ func commandCatch(cfg *config, pokemonName string) error {
 	}
 
 	name := pokemonRes.Name
-	baseExp := pokemonRes.BaseExp
+	pExp := pokemonRes.BaseExp
 
-	//TODO: adjust rates to be easier
+	baseExp := 40.0
+	pExpF := float64(pExp)
+
 	source := rand.NewSource(time.Now().UnixNano())
 	r := rand.New(source)
 
-	chance := r.Intn(baseExp)
+	chance := r.Float64() * pExpF
 
-	minVal := int(baseExp - (baseExp / 10))
+	divFactor := 0.0
+
+	if pExp < 125 {
+		divFactor = 75.0
+	} else {
+		divFactor = 50.0
+	}
+
+	minVal := baseExp * (pExpF / divFactor)
 
 	if chance >= minVal {
 		fmt.Printf("%s was caught!\n", name)
