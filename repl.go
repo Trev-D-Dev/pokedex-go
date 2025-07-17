@@ -30,14 +30,13 @@ func startRepl(cfg *config) {
 			comm, ok := getCommands()[commName]
 
 			if ok {
-				var err error
 				/*if commName == "explore" || commName == "catch" || commName == "inspect" {
 					err = comm.callback(cfg, cInput[1])
 				} else {
 					err = comm.callback(cfg, "")
 				}*/
 
-				err = comm.callback(cfg, cInput[1])
+				err := comm.callback(cfg, cInput[1])
 
 				if err != nil {
 					fmt.Printf("error: %v", err)
@@ -99,6 +98,11 @@ func getCommands() map[string]cliCommand {
 			name:        "inspect",
 			description: "Lists attributes of a caught pokemon",
 			callback:    commandInspect,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Lists the contents of your current pokedex",
+			callback:    commandPokedex,
 		},
 	}
 }

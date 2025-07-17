@@ -27,6 +27,7 @@ func commandCatch(cfg *config, pokemonName string) error {
 	name := pokemonRes.Name
 	baseExp := pokemonRes.BaseExp
 
+	//TODO: adjust rates to be easier
 	source := rand.NewSource(time.Now().UnixNano())
 	r := rand.New(source)
 
